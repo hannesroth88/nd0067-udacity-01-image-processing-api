@@ -4,10 +4,10 @@
   "description": "Project 1 of Nanodegree",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "test": "jasmine",
     "lint": "eslint . --ext .ts",
-    "start:dev": "ts-node-dev --watch src ./src/index.ts",
-    "start": "ts-node ./src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --watch src ./src",
+    "start": "npm run test && tsc && node ./dist/index.js",
     "build": "tsc --build"
   },
   "repository": {

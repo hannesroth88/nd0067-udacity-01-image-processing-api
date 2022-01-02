@@ -10,3 +10,4 @@
 
 # Literature used
 https://khalilstemmler.com/blogs/typescript/node-starter-project/ 
+https://gist.github.com/tracker1/59f2c13044315f88bee9 Project Structure
