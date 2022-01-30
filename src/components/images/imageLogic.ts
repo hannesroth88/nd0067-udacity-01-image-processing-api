@@ -1,19 +1,18 @@
-const sharp = require("sharp");
+import sharp from "sharp";
 const fs = require("fs");
 const path = require("path");
 const IMAGEFOLDER = path.resolve("images");
 
-async function resizeAndSave(filePath: string, filePathNew: string, width: number, height: number) {
-
-/**
- *
- * Function resize and saves an image. Image Stream as a Output. 
- *
- * @param filePath            Input FilePath of Image
- * @param filePathNew         Path of new image.
- * @param width               Desired width of image in pixel.
- * @param height              Desired height of image in pixel.
- */
+async function resizeAndSave(filePath: string, filePathNew: string, width: number, height: number): Promise<Buffer> {
+  /**
+   *
+   * Function resize and saves an image. Image Stream as a Output.
+   *
+   * @param filePath            Input FilePath of Image
+   * @param filePathNew         Path of new image.
+   * @param width               Desired width of image in pixel.
+   * @param height              Desired height of image in pixel.
+   */
 
   const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer();
   sharp(imageNewBuffer).toFile(filePathNew, (err: unknown, info: unknown) => {});
@@ -21,10 +20,10 @@ async function resizeAndSave(filePath: string, filePathNew: string, width: numbe
   return imageNewBuffer;
 }
 
-async function loadImage(filePath: string) {
+async function loadImage(filePath: string): Promise<Buffer> {
   /**
    *
-   * Function laods an image. Output is a stream (Buffer) 
+   * Function laods an image. Output is a stream (Buffer)
    *
    * @param filePath            Input FilePath of Image
    */
@@ -32,11 +31,11 @@ async function loadImage(filePath: string) {
   return imageNew;
 }
 
-async function getImageCorrectSize(fileName: string, width: number, height: number) {
+async function getImageCorrectSize(fileName: string, width: number, height: number): Promise<Buffer> {
   /**
    *
-   * Function checks if a thumbnail of the image in same pixel was already created. 
-   * If yes resize and save. 
+   * Function checks if a thumbnail of the image in same pixel was already created.
+   * If yes resize and save.
    * If no jsut load image from path.
    *
    * @param fileName            Input FilePath of Image

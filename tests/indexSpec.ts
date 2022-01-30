@@ -1,11 +1,10 @@
-import { Metadata } from "sharp";
+import sharp from "sharp";
 import imageLogic from "../src/components/images/imageLogic";
 import imageValidation from "../src/components/images/imageValidation";
 import axios from "axios";
 const AXIOS_OPTIONS = {
   baseURL: "http://localhost:8080",
 };
-const sharp = require("sharp");
 
 describe("Main Test", () => {
   describe("Image Logic Unit Tests", () => {
@@ -19,13 +18,12 @@ describe("Main Test", () => {
       const widthHeight = 200;
       const newImage = await imageLogic.getImageCorrectSize(imageName, widthInput, widthHeight);
 
-
-      await sharp(newImage).metadata()
-        .then(function (metadata: Metadata) {
+      await sharp(newImage)
+        .metadata()
+        .then(function (metadata: sharp.Metadata) {
           expect(metadata.width).toEqual(widthInput);
           return metadata.width;
         });
-
     });
   });
 
