@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/hannesroth88/udacity-fullstack-js-developer#readme",
   "dependencies": {
+    "axios": "^0.25.0",
     "express": "^4.17.2",
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^7.0.0",
@@ -29,10 +30,10 @@
     "sharp": "^0.29.3"
   },
   "devDependencies": {
-    "@types/sharp": "^0.29.5",
     "@types/express": "^4.17.13",
     "@types/jasmine": "^3.10.3",
     "@types/node": "^17.0.6",
+    "@types/sharp": "^0.29.5",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
     "eslint": "^8.6.0",

@@ -1,17 +1,16 @@
 import express from "express";
 const imagesRoute = express.Router();
-import imageLogic from "./../../../components/imageLogic";
+import imageLogic from "../../../components/images/imageLogic";
+import imageValidation from "../../../components/images/imageValidation";
 
-imagesRoute.get("/", (req, res) => {
-  res.send("images route");
-});
+imagesRoute.get("/", imageValidation.imagesValidationRoute, async (req, res, next) => {
+  const imageName = req.query.imageName as string;
+  const width = parseInt(req.query.width as string);
+  const height = parseInt(req.query.height as string);
 
-imagesRoute.get("/:imageName", async (req, res) => {
-  const imageName = req.params.imageName as unknown as string;
-  console.log(imageName);
-
-  const image = await imageLogic.run(imageName, 100, 100);
-  res.send(image);
+  const imageOut = await imageLogic.getImageCorrectSize(imageName, width, height);
+  res.type("jpg").send(imageOut);
+  next();
 });
 
 export default imagesRoute;
