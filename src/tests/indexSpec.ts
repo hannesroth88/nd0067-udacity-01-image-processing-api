@@ -1,6 +1,6 @@
 import sharp from "sharp";
-import imageLogic from "../src/components/images/imageLogic";
-import imageValidation from "../src/components/images/imageValidation";
+import imageLogic from "../components/images/imageLogic";
+import imageValidation from "../components/images/imageValidation";
 import axios from "axios";
 const AXIOS_OPTIONS = {
   baseURL: "http://localhost:8080",
