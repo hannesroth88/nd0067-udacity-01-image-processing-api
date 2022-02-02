@@ -7,10 +7,13 @@ For this project, refactor and test as much as possible while you are building. 
 for further details see: [Udacity Github](https://github.com/udacity/nd-0067-c1-building-a-server-project-starter/blob/master/README.md#image-processing-api)
 
 # Endpoints
+
 ## Usage:
+
 http://localhost:8080/api/images?imageName=xyz&width=yourWidth&height=yourHeight
 
 ## Query Parameters:
+
 <strong>imageName:</strong> The name of Image on the server (without file-extension)<br>
 <strong>width:</strong> Desired width of you image in pixels<br>
 <strong>height:</strong> Desired height of you image in pixels
@@ -29,14 +32,17 @@ will run Tests using jasmine.
 in prior you need to start your server with npm run dev or start
 
 ## DEV
+
 `npm run dev`
+
 1. uses prettier
 2. starts server, will constantly check if a file has been changed and thus reloads.
 
 ## Productive
+
 1. uses prettier
 2. starts server
-`npm run start`
+   `npm run start`
 
 # Literature used
 
