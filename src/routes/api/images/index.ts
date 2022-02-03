@@ -3,7 +3,7 @@ const imagesRoute = express.Router();
 import imageLogic from "../../../components/images/imageLogic";
 import imageValidation from "../../../components/images/imageValidation";
 
-imagesRoute.get("/", imageValidation.imagesValidationRoute, async (req, res, next) => {
+imagesRoute.get("/", imageValidation.imagesValidationRoute, async (req: express.Request, res: express.Response, next) => {
   const imageName = req.query.imageName as string;
   const width = parseInt(req.query.width as string);
   const height = parseInt(req.query.height as string);

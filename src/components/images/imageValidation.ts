@@ -1,10 +1,8 @@
 import express from "express";
-import { nextTick } from "process";
-var imagesValidationRoute = express.Router();
-const fs = require("fs");
-const path = require("path");
-const appDir = path.dirname(require?.main?.filename);
-const IMAGEFOLDER = path.join(appDir, "..", "/images");
+const imagesValidationRoute = express.Router();
+import fs from "fs";
+import path from "path";
+const IMAGEFOLDER = path.resolve("images");
 
 imagesValidationRoute.get("/", async (req, res, next) => {
   console.log("Validate Image");
@@ -21,7 +19,7 @@ imagesValidationRoute.get("/", async (req, res, next) => {
   }
 
   if (req.query.width) {
-    let width = parseInt(req.query.width as string);
+    const width = parseInt(req.query.width as string);
     if (isNaN(width) || width <= 0) {
       res.status(400).end("provide a width >= 0 and of type number");
       return;
@@ -29,7 +27,7 @@ imagesValidationRoute.get("/", async (req, res, next) => {
   }
 
   if (req.query.height) {
-    let height = parseInt(req.query.height as string);
+    const height = parseInt(req.query.height as string);
     if (isNaN(height) || height <= 0) {
       res.status(400).end("provide a height > 0 and of type number");
       return;

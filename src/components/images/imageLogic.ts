@@ -1,6 +1,6 @@
 import sharp from "sharp";
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 const IMAGEFOLDER = path.resolve("images");
 
 async function resizeAndSave(filePath: string, filePathNew: string, width: number, height: number): Promise<Buffer> {
@@ -14,8 +14,16 @@ async function resizeAndSave(filePath: string, filePathNew: string, width: numbe
    * @param height              Desired height of image in pixel.
    */
 
+  // check if directory exists
+  if (!fs.existsSync(path.join(IMAGEFOLDER, "/resize"))) {
+    console.log("Directory does not exist, create it:" + path.join(IMAGEFOLDER, "/resize"));
+    fs.mkdirSync(path.join(IMAGEFOLDER, "/resize"));
+  }
+
   const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer();
-  sharp(imageNewBuffer).toFile(filePathNew, (err: unknown, info: unknown) => {});
+  sharp(imageNewBuffer).toFile(filePathNew, (err: unknown) => {
+    console.error(err);
+  });
   console.log("image created");
   return imageNewBuffer;
 }

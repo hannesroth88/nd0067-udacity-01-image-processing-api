@@ -8,10 +8,14 @@ const AXIOS_OPTIONS = {
 
 describe("Main Test", () => {
   describe("Image Logic Unit Tests", () => {
+
     it("Image not found on server", async () => {
+      
       const data = await imageValidation.isImageFound("someimageNameNotThere");
+
       expect(data).toBeFalse();
     });
+
     it("check Image Size", async () => {
       const imageName = "encenadaport";
       const widthInput = 400;
@@ -30,7 +34,8 @@ describe("Main Test", () => {
   describe("Express Server", () => {
     it("Check Endpoint", async () => {
       const result = await axios.get("/api/images", AXIOS_OPTIONS);
-      expect(result.status === 200);
+
+      expect(result.status).toBe(200);
     });
   });
 });
