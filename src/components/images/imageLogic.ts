@@ -16,16 +16,21 @@ async function resizeAndSave(filePath: string, filePathNew: string, width: numbe
 
   // check if directory exists
   if (!fs.existsSync(path.join(IMAGEFOLDER, "/resize"))) {
-    console.log("Directory does not exist, create it:" + path.join(IMAGEFOLDER, "/resize"));
+    //directory does not exist, create it
     fs.mkdirSync(path.join(IMAGEFOLDER, "/resize"));
   }
 
-  const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer();
-  sharp(imageNewBuffer).toFile(filePathNew, (err: unknown) => {
+  try {
+    // create Image
+    const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer();
+    sharp(imageNewBuffer).toFile(filePathNew, (err: unknown) => {
+      console.error(err);
+    });
+    return imageNewBuffer;
+  } catch (err) {
     console.error(err);
-  });
-  console.log("image created");
-  return imageNewBuffer;
+    throw new Error(err as string);
+  }
 }
 
 async function loadImage(filePath: string): Promise<Buffer> {
@@ -35,8 +40,13 @@ async function loadImage(filePath: string): Promise<Buffer> {
    *
    * @param filePath            Input FilePath of Image
    */
-  const imageNew = await sharp(filePath).toBuffer();
-  return imageNew;
+  try {
+    const imageNew = await sharp(filePath).toBuffer();
+    return imageNew;
+  } catch (err) {
+    console.error(err);
+    throw new Error(err as string);
+  }
 }
 
 async function getImageCorrectSize(fileName: string, width: number, height: number): Promise<Buffer> {
@@ -50,14 +60,19 @@ async function getImageCorrectSize(fileName: string, width: number, height: numb
    * @param width               Desired width of image in pixel.
    * @param height              Desired height of image in pixel.
    */
-  const filePathOriginal = path.join(IMAGEFOLDER, `/full/${fileName}.jpg`);
-  const filePathSize = path.join(IMAGEFOLDER, `/resize/${fileName}_${width}_${height}.jpg`);
-  if (fs.existsSync(filePathSize)) {
-    console.log(`image with same size already there`);
-    return await loadImage(filePathSize);
-  } else {
-    console.log(`image not there, creating it`);
-    return await resizeAndSave(filePathOriginal, filePathSize, width, height);
+
+  try {
+    const filePathOriginal = path.join(IMAGEFOLDER, `/full/${fileName}.jpg`);
+    const filePathSize = path.join(IMAGEFOLDER, `/resize/${fileName}_${width}_${height}.jpg`);
+    if (fs.existsSync(filePathSize)) {
+      //image with same size already there
+      return await loadImage(filePathSize);
+    } else {
+      //image not there, creating it
+      return await resizeAndSave(filePathOriginal, filePathSize, width, height);
+    }
+  } catch (err) {
+    throw new Error(err as string);
   }
 }
 

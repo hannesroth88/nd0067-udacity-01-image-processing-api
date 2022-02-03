@@ -29,7 +29,7 @@ uses eslint
 
 `npm run test`
 will run Tests using jasmine.
-in prior you need to start your server with npm run dev or start
+automatically starts server before endpoint tests
 
 ## DEV
 

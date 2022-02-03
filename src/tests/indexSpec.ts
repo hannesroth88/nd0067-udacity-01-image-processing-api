@@ -8,9 +8,7 @@ const AXIOS_OPTIONS = {
 
 describe("Main Test", () => {
   describe("Image Logic Unit Tests", () => {
-
     it("Image not found on server", async () => {
-      
       const data = await imageValidation.isImageFound("someimageNameNotThere");
 
       expect(data).toBeFalse();
@@ -32,10 +30,40 @@ describe("Main Test", () => {
   });
 
   describe("Express Server", () => {
-    it("Check Endpoint", async () => {
+    beforeEach(function () {
+      //we start express app here
+      require("../index.js");
+    });
+
+    it("Check Endpoint /api/images", async () => {
       const result = await axios.get("/api/images", AXIOS_OPTIONS);
 
       expect(result.status).toBe(200);
+    });
+
+    it("Check /api/images: success", async () => {
+
+      const result = await axios.get("/api/images?imageName=fjord&width=100&height=510", AXIOS_OPTIONS);
+
+      expect(result.status).toBe(200);
+    });
+
+    it("Check /api/images: unknown imageName", async () => {
+      try {
+        const result = await axios.get("/api/images?imageName=someimageNameNotThere&width=100&height=510", AXIOS_OPTIONS);
+        console.log(result.status);
+      } catch (result:any) {
+        expect(result.response.status).toBe(404);
+      }
+    });
+
+    it("Check /api/images: no width & no height", async () => {
+      try {
+        const result = await axios.get("/api/images?imageName=fjord", AXIOS_OPTIONS);
+        console.log(result.status);
+      } catch (result: any) {
+        expect(result.response.status).toBe(400);
+      }
     });
   });
 });
