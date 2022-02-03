@@ -7,7 +7,6 @@ imagesRoute.get(
   "/",
   imageValidation.imagesValidationRoute,
   async (req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> => {
-
     try {
       const imageName = req.query.imageName as string;
       const width = parseInt(req.query.width as string);

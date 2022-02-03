@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import sharp from "sharp";
 import imageLogic from "../components/images/imageLogic";
 import imageValidation from "../components/images/imageValidation";
@@ -42,27 +43,26 @@ describe("Main Test", () => {
     });
 
     it("Check /api/images: success", async () => {
-
       const result = await axios.get("/api/images?imageName=fjord&width=100&height=510", AXIOS_OPTIONS);
 
       expect(result.status).toBe(200);
     });
 
-    it("Check /api/images: unknown imageName", async () => {
+    it("Error /api/images: unknown imageName", async () => {
       try {
         const result = await axios.get("/api/images?imageName=someimageNameNotThere&width=100&height=510", AXIOS_OPTIONS);
         console.log(result.status);
-      } catch (result:any) {
-        expect(result.response.status).toBe(404);
+      } catch (error: any) {
+        expect(error.response.status).toBe(404);
       }
     });
 
-    it("Check /api/images: no width & no height", async () => {
+    it("Error /api/images: no width & no height", async () => {
       try {
         const result = await axios.get("/api/images?imageName=fjord", AXIOS_OPTIONS);
         console.log(result.status);
-      } catch (result: any) {
-        expect(result.response.status).toBe(400);
+      } catch (error: any) {
+        expect(error.response.status).toBe(400);
       }
     });
   });
