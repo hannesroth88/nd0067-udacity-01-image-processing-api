@@ -1,7 +1,7 @@
-import sharp from "sharp";
-import fs from "fs";
-import path from "path";
-const IMAGEFOLDER = path.resolve("images");
+import sharp from "sharp"
+import fs from "fs"
+import path from "path"
+const IMAGEFOLDER = path.resolve("images")
 
 async function resizeAndSave(filePath: string, filePathNew: string, width: number, height: number): Promise<Buffer> {
   /**
@@ -17,19 +17,19 @@ async function resizeAndSave(filePath: string, filePathNew: string, width: numbe
   // check if directory exists
   if (!fs.existsSync(path.join(IMAGEFOLDER, "/resize"))) {
     //directory does not exist, create it
-    fs.mkdirSync(path.join(IMAGEFOLDER, "/resize"));
+    fs.mkdirSync(path.join(IMAGEFOLDER, "/resize"))
   }
 
   try {
     // create Image
-    const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer();
+    const imageNewBuffer = await sharp(filePath).resize(width, height).toBuffer()
     sharp(imageNewBuffer).toFile(filePathNew, (err: unknown) => {
-      console.error(err);
-    });
-    return imageNewBuffer;
+      console.error(err)
+    })
+    return imageNewBuffer
   } catch (err) {
-    console.error(err);
-    throw new Error(err as string);
+    console.error(err)
+    throw new Error(err as string)
   }
 }
 
@@ -41,11 +41,11 @@ async function loadImage(filePath: string): Promise<Buffer> {
    * @param filePath            Input FilePath of Image
    */
   try {
-    const imageNew = await sharp(filePath).toBuffer();
-    return imageNew;
+    const imageNew = await sharp(filePath).toBuffer()
+    return imageNew
   } catch (err) {
-    console.error(err);
-    throw new Error(err as string);
+    console.error(err)
+    throw new Error(err as string)
   }
 }
 
@@ -62,20 +62,20 @@ async function getImageCorrectSize(fileName: string, width: number, height: numb
    */
 
   try {
-    const filePathOriginal = path.join(IMAGEFOLDER, `/full/${fileName}.jpg`);
-    const filePathSize = path.join(IMAGEFOLDER, `/resize/${fileName}_${width}_${height}.jpg`);
+    const filePathOriginal = path.join(IMAGEFOLDER, `/full/${fileName}.jpg`)
+    const filePathSize = path.join(IMAGEFOLDER, `/resize/${fileName}_${width}_${height}.jpg`)
     if (fs.existsSync(filePathSize)) {
       //image with same size already there
-      return await loadImage(filePathSize);
+      return await loadImage(filePathSize)
     } else {
       //image not there, creating it
-      return await resizeAndSave(filePathOriginal, filePathSize, width, height);
+      return await resizeAndSave(filePathOriginal, filePathSize, width, height)
     }
   } catch (err) {
-    throw new Error(err as string);
+    throw new Error(err as string)
   }
 }
 
 export default {
-  getImageCorrectSize,
-};
+  getImageCorrectSize
+}
